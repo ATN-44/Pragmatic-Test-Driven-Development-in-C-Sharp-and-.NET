@@ -53,8 +53,7 @@ public class DivisionTests
     [InlineData( -int.MaxValue ,  int.MinValue ,  0.999999999534 )]
     [InlineData(  int.MinValue ,  int.MaxValue , -1.000000000466 )]
     [InlineData(  int.MinValue , -int.MaxValue ,  1.000000000466 )]
-    public void Divide_ExtremeInput_CorrectCalculation(
-               int dividend, int divisor, decimal expectedQuotient)
+    public void Divide_ExtremeInput_CorrectCalculation(int dividend, int divisor, decimal expectedQuotient)
     {
         // Arrange
 

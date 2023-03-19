@@ -7,12 +7,11 @@ namespace Uqs.Weather.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private const int FORECAST_DAYS = 5;
+    private const int ForecastDays = 5;
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IConfiguration _config;
 
-    private static readonly string[] Summaries = new[]
-    {
+    private static readonly string[] Summaries = {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild",
         "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
@@ -34,22 +33,22 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("GetRealWeatherForecast")]
     public async Task<IEnumerable<WeatherForecast>> GetReal()
     {
-        const decimal GREENWICH_LAT = 51.4810m;
-        const decimal GREENWICH_LON = 0.0052m;
-        string apiKey = _config["OpenWeather:Key"];
-        HttpClient httpClient = new HttpClient();
-        Client openWeatherClient = new Client(apiKey, httpClient);
-        OneCallResponse res = await openWeatherClient.OneCallAsync
-            (GREENWICH_LAT, GREENWICH_LON, new [] {
+        const decimal greenwichLat = 51.4810m;
+        const decimal greenwichLon = 0.0052m;
+        var apiKey = _config["OpenWeather:Key"];
+        var httpClient = new HttpClient();
+        var openWeatherClient = new Client(apiKey, httpClient);
+        var res = await openWeatherClient.OneCallAsync
+            (greenwichLat, greenwichLon, new [] {
                 Excludes.Current, Excludes.Minutely,
                 Excludes.Hourly, Excludes.Alerts }, Units.Metric);
 
-        WeatherForecast[] wfs = new WeatherForecast[FORECAST_DAYS];
-        for (int i = 0; i < wfs.Length; i++)
+        var wfs = new WeatherForecast[ForecastDays];
+        for (var i = 0; i < wfs.Length; i++)
         {
             var wf = wfs[i] = new WeatherForecast();
             wf.Date = res.Daily[i + 1].Dt;
-            double forecastedTemp = res.Daily[i + 1].Temp.Day;
+            var forecastedTemp = res.Daily[i + 1].Temp.Day;
             wf.TemperatureC = (int)Math.Round(forecastedTemp);
             wf.Summary = MapFeelToTemp(wf.TemperatureC);
         }
@@ -59,7 +58,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("GetRandomWeatherForecast")]
     public IEnumerable<WeatherForecast> GetRandom()
     {
-        WeatherForecast[] wfs = new WeatherForecast[FORECAST_DAYS];
+        WeatherForecast[] wfs = new WeatherForecast[ForecastDays];
         for(int i = 0;i < wfs.Length;i++)
         {
             var wf = wfs[i] = new WeatherForecast();

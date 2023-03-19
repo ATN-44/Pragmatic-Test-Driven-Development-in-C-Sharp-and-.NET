@@ -40,8 +40,8 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("GetRealWeatherForecast")]
     public async Task<IEnumerable<WeatherForecast>> GetReal()
     {
-        const decimal GREENWICH_LAT = 51.4810m;
-        const decimal GREENWICH_LON = 0.0052m;
+        const decimal GREENWICH_LAT = -0.1257m;
+        const decimal GREENWICH_LON = 51.5085m;
         OneCallResponse res = await _client.OneCallAsync
             (GREENWICH_LAT, GREENWICH_LON, new[] {
                 Excludes.Current, Excludes.Minutely,
