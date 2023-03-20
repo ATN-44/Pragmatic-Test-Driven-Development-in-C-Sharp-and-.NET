@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging.Abstractions;
 using Uqs.Weather.Controllers;
 using Xunit;
@@ -22,12 +23,11 @@ public class WeatherForecastControllerTests
     [InlineData(-100, -148)]
     [InlineData(-10.1, 13.8)]
     [InlineData(10, 50)]
-
     public void ConvertCToF_Celsius_CorrectFahrenheit(double c, double f)
     {
         var logger = NullLogger<WeatherForecastController>.Instance;
-        var controller = new WeatherForecastController(logger, 
-            null!, null!, null!);
+        var controller = new WeatherForecastController(logger, null!, null!, null!);
+
         double actual = controller.ConvertCToF(c);
 
         Assert.Equal(f, actual, 1);
