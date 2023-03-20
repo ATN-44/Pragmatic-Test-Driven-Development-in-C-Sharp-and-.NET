@@ -4,9 +4,10 @@ using Uqs.Weather.Wrappers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<IClient>(_ => {
-    string apiKey = builder.Configuration["OpenWeather:Key"];
-    HttpClient httpClient = new HttpClient();
+builder.Services.AddSingleton<IClient>(_ =>
+{
+    var apiKey = builder.Configuration["OpenWeather:Key"];
+    var httpClient = new HttpClient();
     return new Client(apiKey, httpClient);
 });
 builder.Services.AddSingleton<INowWrapper>(_ => new NowWrapper());
