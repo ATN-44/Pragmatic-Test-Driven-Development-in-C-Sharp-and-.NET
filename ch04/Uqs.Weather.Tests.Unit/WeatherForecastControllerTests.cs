@@ -24,7 +24,6 @@ public class WeatherForecastControllerTests
     [InlineData(-100, -148)]
     [InlineData(-10.1, 13.8)]
     [InlineData(10, 50)]
-
     public void ConvertCToF_Celsius_CorrectFahrenheit(double c, double f)
     {
         var logger = NullLogger<WeatherForecastController>.Instance;

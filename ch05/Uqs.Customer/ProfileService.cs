@@ -18,8 +18,7 @@ public class ProfileService
         }
         if (!_formatRegex.Match(username).Success)
         {
-            throw new ArgumentOutOfRangeException(nameof(username),
-                "InvalidChar");
+            throw new ArgumentOutOfRangeException(nameof(username), "InvalidChar");
         }
     }
 }
